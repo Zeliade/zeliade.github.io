@@ -181,9 +181,9 @@ pre {
 }
 
 .urls {
-  columns: 2; column-gap: 8mm;
+  columns: 3; column-gap: 7mm;
   list-style: none; margin: 0 0 2.5mm; padding: 0;
-  font-family: var(--mono); font-size: 8.5pt; line-height: 1.75;
+  font-family: var(--mono); font-size: 8.5pt; line-height: 1.65;
   color: var(--ink-soft);
 }
 .urls li { break-inside: avoid; }
@@ -199,6 +199,15 @@ pre {
 }
 
 .after { margin: 0; padding-left: 5mm; font-size: 10pt; }
+
+/* ---------- Local test ---------- */
+.local h2 { break-after: avoid; }
+kbd {
+  font-family: var(--sans); font-size: 0.82em; font-weight: 600;
+  background: #fff; border: 0.5pt solid var(--line);
+  border-bottom-width: 1.2pt; border-radius: 2pt;
+  padding: 0.1em 0.4em;
+}
 .after li { margin-bottom: 2.2mm; }
 
 .colophon {
@@ -206,4 +215,4 @@ pre {
   border-top: 0.5pt solid var(--line);
   font-size: 8.5pt; color: var(--ink-faint);
 }
-.section--last { margin-bottom: 0; }
+.section--last { margin-bottom: 0; break-before: page; break-inside: avoid; }

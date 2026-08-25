@@ -7,7 +7,7 @@
   <dl class="meta">
     <div><dt>Repository</dt><dd>github.com/Zeliade/zeliade.github.io</dd></div>
     <div><dt>Pull requests</dt><dd>2, to be merged in order</dd></div>
-    <div><dt>Expected downtime</dt><dd>2&ndash;3 minutes, at step 4</dd></div>
+    <div><dt>Expected downtime</dt><dd>2&ndash;3 minutes, between steps 3 and 4</dd></div>
     <div><dt>Rollback</dt><dd>A settings toggle, until step 6</dd></div>
   </dl>
 </header>
@@ -41,7 +41,8 @@
     </tbody>
   </table>
 
-  <p>Page addresses are unchanged, so no external link to a page breaks. One exception is covered
+  <p>Page addresses are unchanged, so no external link to a page is broken. There is one
+  exception, covered
   under <em>After the cutover</em>.</p>
 </section>
 
@@ -62,6 +63,38 @@
     <p class="pr__effect"><strong>Effect on the live site:</strong> removes the files Pages currently
     serves. Harmless <em>after</em> step 5, fatal before it.</p>
   </div>
+</section>
+
+<section class="local">
+  <h2>Before you start: run it locally</h2>
+  <p>Nothing below touches GitHub, the live site or the repository. Do this first &mdash; it is the
+  cheapest possible way to find a problem.</p>
+
+  <p>Check out <code>modernize/remove-legacy</code>, not the other branch. The <code>site/</code>
+  directory is identical on both, so you see the same website either way &mdash; but on
+  <code>remove-legacy</code> the old WordPress files are already gone, which proves the new build
+  does not quietly depend on any of them.</p>
+
+  <p>Requires <strong>Node.js 22 or newer</strong> (<code>node --version</code>).</p>
+
+  <pre>git fetch origin
+git checkout modernize/remove-legacy
+cd site
+npm ci          # installs exactly the versions in package-lock.json
+npm run build   # ~2 s; fails loudly if any content is broken
+npm run preview # serves on http://localhost:4321</pre>
+
+  <p>Open <code>http://localhost:4321</code> and click through everything &mdash; every menu entry,
+  a few white paper PDFs, the team biographies, and an address that does not exist to see the 404
+  page. Resize the window down to phone width to check the mobile menu.</p>
+
+  <p class="note"><strong>Use <code>npm run preview</code>, not a plain HTTP server.</strong> Serving
+  <code>site/dist</code> with something like <code>python3 -m http.server</code> mostly works, but it
+  returns its own bare error page instead of the site&rsquo;s styled 404, so that one check would give
+  a misleading result. <code>npm run preview</code> serves the exact files the workflow publishes.</p>
+
+  <p>Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop, then <code>git checkout master</code> to get back.
+  Nothing you did needs undoing.</p>
 </section>
 
 <section class="steps">
@@ -107,20 +140,21 @@
 
     <li>
       <h3>Verify on the real domain</h3>
-      <p>Not on a preview. Every page, plus one PDF:</p>
+      <p>Not on a preview &mdash; on <strong>www.zeliade.com</strong> itself. Every page, plus one
+      PDF:</p>
       <ul class="urls">
-        <li>www.zeliade.com/</li>
-        <li>www.zeliade.com/zqf/</li>
-        <li>www.zeliade.com/consulting/</li>
-        <li>www.zeliade.com/mvccps/</li>
-        <li>www.zeliade.com/whitepapers/</li>
-        <li>www.zeliade.com/researchpapers/</li>
-        <li>www.zeliade.com/clients/</li>
-        <li>www.zeliade.com/company/</li>
-        <li>www.zeliade.com/team/</li>
-        <li>www.zeliade.com/contact-us/</li>
-        <li>www.zeliade.com/legal-information/</li>
-        <li>www.zeliade.com/whitepapers/zwp-012-IMforOptions.pdf</li>
+        <li>/</li>
+        <li>/zqf/</li>
+        <li>/consulting/</li>
+        <li>/mvccps/</li>
+        <li>/whitepapers/</li>
+        <li>/researchpapers/</li>
+        <li>/clients/</li>
+        <li>/company/</li>
+        <li>/team/</li>
+        <li>/contact-us/</li>
+        <li>/legal-information/</li>
+        <li>/whitepapers/zwp-012-IMforOptions.pdf</li>
       </ul>
       <p>Also check the padlock is present, and that a nonsense address returns the styled 404 page
       rather than GitHub's.</p>

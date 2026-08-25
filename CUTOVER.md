@@ -15,6 +15,38 @@ Expect **2–3 minutes of downtime** between steps 3 and 4. Pick a quiet slot.
 
 ---
 
+## 0. Run it locally first
+
+Nothing here touches GitHub, the live site or the repository state. Do it
+before anything else — it is the cheapest way to find a problem.
+
+Check out `modernize/remove-legacy`, not the other branch. `site/` is identical
+on both, so you see the same website either way — but on `remove-legacy` the old
+WordPress files are already gone, which proves the new build does not quietly
+depend on any of them.
+
+Requires Node.js 22 or newer (`node --version`).
+
+```sh
+git fetch origin
+git checkout modernize/remove-legacy
+cd site
+npm ci          # installs exactly the versions in package-lock.json
+npm run build   # ~2s; fails loudly if any content is broken
+npm run preview # serves on http://localhost:4321
+```
+
+Click through everything: every menu entry, a few white paper PDFs, the team
+biographies, and an address that does not exist to see the 404 page. Resize to
+phone width to check the mobile menu.
+
+Use `npm run preview`, **not** a plain HTTP server. Serving `site/dist` with
+`python3 -m http.server` mostly works, but it returns its own bare error page
+instead of the site's styled 404, so that one check would mislead you.
+`npm run preview` serves the exact files the workflow publishes.
+
+`Ctrl+C` to stop, then `git checkout master`. Nothing needs undoing.
+
 ## 1. Merge PR 1 — `modernize/astro-site` → `master`
 
 Safe. Pages is still deploying from the `master` branch root, and every legacy
