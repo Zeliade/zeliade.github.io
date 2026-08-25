@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'zod';
 import { glob, file } from 'astro/loaders';
 
 /**
@@ -39,7 +40,7 @@ const papers = defineCollection({
     date: z.date(),
     /** Where the paper is published (journal, publisher). */
     venue: z.string().optional(),
-    url: z.string().url(),
+    url: z.url(),
   }),
 });
 
