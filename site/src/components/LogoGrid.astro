@@ -31,16 +31,27 @@ const { logos } = Astro.props;
 
   .logo-grid li {
     display: grid;
+    /* One explicit track each way. An implicit `auto` track would be sized by
+       the logo itself, which makes the image's own percentage sizing cyclic;
+       `minmax(0, 1fr)` of a definite-height cell is definite, so the image can
+       be clamped against it. */
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     place-items: center;
-    aspect-ratio: 16 / 9;
-    padding: 1.1rem;
+    /* A definite height, not aspect-ratio: a grid item's automatic minimum size
+       is content-based, so a logo taller than the cell's implied height would
+       stretch its own cell and break the row alignment. */
+    height: clamp(5rem, 7vw, 6.25rem);
+    padding: 0.9rem 1.15rem;
     background: var(--paper);
   }
 
   .logo-grid img {
+    /* Clamped on both axes against the definite track above, so no source
+       aspect ratio can overflow the cell. object-fit guards the rest. */
+    max-width: 100%;
     max-height: 100%;
     width: auto;
-    max-width: 100%;
+    height: auto;
     object-fit: contain;
     /* Legacy logos are mixed-quality PNGs on white; desaturate slightly so the
        wall reads as one set, and restore full colour on hover. */
