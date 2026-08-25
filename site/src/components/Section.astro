@@ -1,0 +1,25 @@
+---
+interface Props {
+  /** Alternate background, for banding long pages. */
+  tone?: 'default' | 'alt';
+  /** Narrower measure, for prose-only sections. */
+  narrow?: boolean;
+  id?: string;
+}
+const { tone = 'default', narrow = false, id } = Astro.props;
+---
+
+<section class:list={['section', tone === 'alt' && 'section--alt']} id={id}>
+  <div class:list={['shell', narrow && 'shell--narrow']}>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section { padding-block: clamp(2.75rem, 7vw, 5rem); }
+  .section--alt {
+    background: var(--paper-alt);
+    border-block: 1px solid var(--line-soft);
+  }
+  .section + .section--alt { margin-top: 0; }
+</style>

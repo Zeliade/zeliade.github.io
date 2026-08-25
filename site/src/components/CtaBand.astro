@@ -1,0 +1,37 @@
+---
+interface Props {
+  heading?: string;
+  body?: string;
+}
+const {
+  heading = 'Let us look at your problem',
+  body = 'Tell us about your valuation, risk or validation question and we will come back to you.',
+} = Astro.props;
+---
+
+<section class="cta">
+  <div class="shell cta__inner">
+    <div>
+      <h2>{heading}</h2>
+      <p>{body}</p>
+    </div>
+    <a class="btn btn--onDark" href="/contact-us/">Contact us</a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: var(--brand-strong);
+    color: #fff;
+    padding-block: clamp(2.5rem, 6vw, 3.75rem);
+  }
+  .cta__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.75rem;
+  }
+  .cta h2 { color: #fff; font-size: var(--step-2); }
+  .cta p { margin-top: 0.5rem; max-width: 52ch; color: rgb(255 255 255 / 78%); }
+</style>

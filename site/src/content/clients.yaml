@@ -1,0 +1,52 @@
+# Client logos, grouped by the kind of work. Adding a client = one entry here
+# plus the PNG in public/img/logos/. `name` is used as the image alt text.
+
+- id: ccp
+  heading: "Model Validation and Development for CCPs"
+  groups:
+    - logos:
+        - { name: "LCH", src: /img/logos/LCH.png }
+        - { name: "Cboe Clear Europe", src: /img/logos/CboeClearEurope.png }
+        - { name: "HKEX", src: /img/logos/HKEX.png }
+        - { name: "TMX Group", src: /img/logos/TMX.png }
+        - { name: "SIX", src: /img/logos/Six.png }
+        - { name: "European Commodity Clearing", src: /img/logos/ECC.png }
+        - { name: "Nasdaq", src: /img/logos/Nasdaq.png }
+        - { name: "LME Clear", src: /img/logos/LMEClear.png }
+        - { name: "Japan Securities Clearing Corporation", src: /img/logos/JSCC.png }
+        - { name: "Singapore Exchange", src: /img/logos/SGX.png }
+        - { name: "KDPW_CCP", src: /img/logos/KDPW.png }
+        - { name: "Tel Aviv Stock Exchange", src: /img/logos/TASE.png }
+        - { name: "Abaxx", src: /img/logos/Abaxx.png }
+        - { name: "ClearToken", src: /img/logos/ClearToken.png }
+        - { name: "OMIClear", src: /img/logos/OMIClear.png }
+        - { name: "KACC", src: /img/logos/KACC.png }
+
+- id: consulting
+  heading: "Consulting"
+  groups:
+    - logos:
+        - { name: "Marex", src: /img/logos/Marex.png }
+        - { name: "Louis Dreyfus Company", src: /img/logos/LouisDreyfus.png }
+        - { name: "Athena Capital", src: /img/logos/AthenaCapital.png }
+        - { name: "NexGen", src: /img/logos/NexGen.png }
+        - { name: "Aurion", src: /img/logos/Aurion.png }
+        - { name: "Quantum Wave", src: /img/logos/QuantumWave.png }
+        - { name: "Aleva", src: /img/logos/Aleva.png }
+        - { name: "EiFFEL Investment Group", src: /img/logos/EiFFEL.png }
+
+- id: analytics
+  heading: "Analytics (Zeliade Quant Framework)"
+  groups:
+    - label: "Banks"
+      logos:
+        - { name: "Société Générale", src: /img/logos/SocieteGenerale.png }
+        - { name: "Dexia", src: /img/logos/Dexia.png }
+    - label: "Funds and Asset Managers"
+      logos:
+        - { name: "OGAM", src: /img/logos/OGAM.png }
+        - { name: "EiFFEL Investment Group", src: /img/logos/EiFFEL.png }
+        - { name: "Observatory Capital", src: /img/logos/ObservatoryCapital.png }
+        - { name: "CRC", src: /img/logos/CRC.png }
+        - { name: "ODDO BHF", src: /img/logos/oddo.png }
+        - { name: "BlueCrest Capital Management", src: /img/logos/bluecrest.png }

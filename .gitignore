@@ -1,0 +1,6 @@
+# Local IDE / editor config
+.idea/
+.vscode/
+
+# OS cruft
+.DS_Store

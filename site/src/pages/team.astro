@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import TeamGrid from '../components/TeamGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<Base
+  title="Team"
+  description="The Zeliade Systems team: quantitative researchers and engineers in volatility modelling, margin models, credit derivatives and model validation."
+>
+  <PageHeader
+    eyebrow="About us"
+    title="Zeliade team"
+    lede="A small team of PhDs in applied and financial mathematics, with two decades of combined experience across investment banks, hedge funds and central counterparties."
+  />
+  <Section>
+    <TeamGrid />
+  </Section>
+  <CtaBand heading="Talk to the team" body="We are happy to discuss your project directly with the people who will work on it." />
+</Base>

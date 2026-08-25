@@ -1,0 +1,61 @@
+---
+interface Props {
+  logos: { name: string; src: string }[];
+}
+const { logos } = Astro.props;
+---
+
+<ul class="logo-grid">
+  {
+    logos.map((logo) => (
+      <li>
+        <img src={logo.src} alt={logo.name} loading="lazy" decoding="async" />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .logo-grid li {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    padding: 1.1rem;
+    background: var(--paper);
+  }
+
+  .logo-grid img {
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    /* Legacy logos are mixed-quality PNGs on white; desaturate slightly so the
+       wall reads as one set, and restore full colour on hover. */
+    filter: grayscale(100%);
+    opacity: 0.72;
+    transition: filter 180ms ease, opacity 180ms ease;
+  }
+  .logo-grid li:hover img { filter: none; opacity: 1; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .logo-grid img {
+      /* The source PNGs assume a white background. */
+      background: #fff;
+      padding: 0.35rem;
+      border-radius: 3px;
+    }
+  }
+</style>

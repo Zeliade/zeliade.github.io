@@ -1,0 +1,113 @@
+---
+import { nav } from '../data/nav';
+import { site } from '../data/site';
+
+// Flatten the menu into a single link list for the footer.
+const links = nav.flatMap((item) =>
+  item.children ? item.children : item.href ? [{ label: item.label, href: item.href }] : []
+);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__grid">
+    <div class="site-footer__about">
+      <p class="site-footer__name">{site.name}</p>
+      <p class="site-footer__tagline">{site.tagline}.</p>
+    </div>
+
+    <div>
+      <h2 class="site-footer__heading">Contact</h2>
+      <address class="site-footer__address">
+        <a href={`mailto:${site.email}`}>{site.email}</a><br />
+        <a href={`tel:${site.phoneHref}`}>{site.phone}</a><br />
+        <span>
+          {site.address.street}<br />
+          {site.address.postalCode} {site.address.city}, {site.address.country}
+        </span>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="site-footer__heading">Site</h2>
+      <ul class="site-footer__links">
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="shell site-footer__base">
+    <p>&copy; {site.founded}&ndash;{year} Zeliade SAS. All rights reserved.</p>
+    <a href="/legal-information/">Legal information</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 0;
+    padding-block: clamp(3rem, 7vw, 4.5rem) 0;
+    background: var(--paper-deep);
+    color: #c7d6e2;
+    font-size: var(--step--1);
+  }
+
+  .site-footer a { color: #e6eef4; }
+  .site-footer a:hover { color: #fff; }
+
+  .site-footer__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 46rem) {
+    .site-footer__grid { grid-template-columns: 1.5fr 1fr 1fr; }
+  }
+
+  .site-footer__name {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: #fff;
+  }
+  .site-footer__tagline {
+    margin-top: 0.5rem;
+    max-width: 34ch;
+    color: #9db2c3;
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-tint);
+    margin-bottom: 0.9rem;
+  }
+
+  .site-footer__address {
+    font-style: normal;
+    line-height: 1.9;
+  }
+
+  .site-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.9;
+  }
+
+  .site-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding-block: 1.25rem;
+    border-top: 1px solid rgb(255 255 255 / 10%);
+    color: #8ea4b6;
+  }
+</style>

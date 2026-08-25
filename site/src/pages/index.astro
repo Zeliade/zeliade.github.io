@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CtaBand from '../components/CtaBand.astro';
+import LogoGrid from '../components/LogoGrid.astro';
+import { getCollection } from 'astro:content';
+
+const services = [
+  {
+    eyebrow: 'Analytics library',
+    title: 'Zeliade Quant Framework',
+    href: '/zqf/',
+    body:
+      'Zeliade Quant Framework (ZQF) is an analytics library, with outstanding calibration and pricing algorithms. ZQF is designed to be extended in-house with new products and new models.',
+  },
+  {
+    eyebrow: 'Consulting',
+    title: 'Auditing, consulting and custom development',
+    href: '/consulting/',
+    body:
+      "Zeliade's range of services includes auditing, consulting, and custom development services, helping companies solve complex financial problems, in the derivatives field or fields related to derivatives like stochastic methods for insurance companies.",
+  },
+  {
+    eyebrow: 'Model validation',
+    title: 'Independent validation for CCPs',
+    href: '/mvccps/',
+    body:
+      'Zeliade works with prominent Central Clearing Counterparties (CCPs) as an independent validator for their risk policies, with more than 100 independent validation projects spanning global and local CCPs.',
+  },
+];
+
+// A representative selection for the homepage; the full wall lives on /clients/.
+const segments = await getCollection('clientSegments');
+const featuredLogos = segments.flatMap((s) => s.data.groups.flatMap((g) => g.logos)).slice(0, 16);
+---
+
+<Base
+  title="Quantitative analytics, consulting and model validation"
+  description="Zeliade Systems provides state-of-the-art analytics, consulting and independent model validation for banks, hedge funds and central counterparties (CCPs)."
+>
+  <section class="hero">
+    <div class="shell hero__inner">
+      <p class="eyebrow">Products &amp; Services</p>
+      <h1>Quantitative analytics, consulting and model validation for financial institutions</h1>
+      <p class="hero__lede">
+        Founded in 2003, Zeliade Systems combines pure quantitative research with in-depth market
+        experience, delivered in smart software packages.
+      </p>
+      <p class="hero__actions">
+        <a class="btn btn--solid" href="/mvccps/">Model validation for CCPs</a>
+        <a class="btn btn--ghost" href="/zqf/">Explore ZQF</a>
+      </p>
+    </div>
+  </section>
+
+  <Section>
+    <ul class="services">
+      {
+        services.map((service) => (
+          <li class="service">
+            <p class="eyebrow">{service.eyebrow}</p>
+            <h2 class="service__title">
+              <a href={service.href}>{service.title}</a>
+            </h2>
+            <p class="service__body">{service.body}</p>
+            <p class="service__more">
+              <a href={service.href}>
+                More<span aria-hidden="true"> &rarr;</span>
+                <span class="visually-hidden"> about {service.title}</span>
+              </a>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section tone="alt">
+    <div class="clients-head">
+      <div>
+        <p class="eyebrow">Clients</p>
+        <h2>We work with</h2>
+      </div>
+      <a class="btn btn--ghost" href="/clients/">All clients</a>
+    </div>
+    <div class="clients-grid">
+      <LogoGrid logos={featuredLogos} />
+    </div>
+  </Section>
+
+  <Testimonials page="home" />
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(3.5rem, 11vw, 7.5rem);
+    color: #fff;
+    background-color: var(--brand-strong);
+    background-image:
+      linear-gradient(105deg, rgb(11 32 47 / 92%) 12%, rgb(15 47 71 / 72%) 62%, rgb(20 64 95 / 55%)),
+      url('/img/paris.jpg');
+    background-size: cover;
+    background-position: center 30%;
+  }
+
+  .hero__inner { max-width: 46rem; }
+  .hero h1 {
+    margin-top: 0.9rem;
+    color: #fff;
+    font-size: var(--step-4);
+  }
+  .hero .eyebrow { color: var(--accent-tint); }
+  .hero__lede {
+    margin-top: 1.3rem;
+    max-width: 52ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: rgb(255 255 255 / 84%);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+  .hero__actions .btn--ghost {
+    border-color: rgb(255 255 255 / 40%);
+    color: #fff;
+  }
+  .hero__actions .btn--ghost:hover { border-color: #fff; color: #fff; background: rgb(255 255 255 / 10%); }
+
+  /* --- Services --------------------------------------------------------- */
+  .services {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 52rem) {
+    .services { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .service {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 1.35rem;
+    border-top: 2px solid var(--brand-tint);
+  }
+  .service__title { font-size: var(--step-2); }
+  .service__title a { color: var(--ink); }
+  .service__title a:hover { color: var(--brand); text-decoration: none; }
+  .service__body { color: var(--ink-soft); }
+  .service__more {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* --- Clients ---------------------------------------------------------- */
+  .clients-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .clients-head h2 { margin-top: 0.4rem; font-size: var(--step-3); }
+</style>

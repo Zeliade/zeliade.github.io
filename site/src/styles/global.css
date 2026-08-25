@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Zeliade Systems — design tokens & base styles
+   The complete stylesheet for the site. Hand-authored; no framework.
+   ========================================================================== */
+
+:root {
+  /* --- Brand -------------------------------------------------------------
+     Derived from the legacy palette (#66a0c6 blue, #f4a96f orange), darkened
+     to reach WCAG AA against white. The originals are kept as light tints. */
+  --brand:        #1f5f8f;
+  --brand-strong: #14405f;
+  --brand-tint:   #66a0c6;
+  --brand-wash:   #eef4f9;
+  --accent:       #c2621f;
+  --accent-tint:  #f4a96f;
+
+  /* --- Surfaces & ink --------------------------------------------------- */
+  --ink:       #101d28;
+  --ink-soft:  #45596b;
+  --ink-faint: #6d8296;
+  --paper:     #ffffff;
+  --paper-alt: #f5f8fa;
+  --paper-deep:#0f2231;
+  --line:      #dbe4ec;
+  --line-soft: #eaf0f5;
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  /* Fluid type scale, ~1.24 ratio at the small end opening to ~1.31. */
+  --step--1: clamp(0.82rem, 0.80rem + 0.10vw, 0.88rem);
+  --step-0:  clamp(1.00rem, 0.97rem + 0.16vw, 1.09rem);
+  --step-1:  clamp(1.20rem, 1.13rem + 0.34vw, 1.42rem);
+  --step-2:  clamp(1.44rem, 1.31rem + 0.65vw, 1.86rem);
+  --step-3:  clamp(1.73rem, 1.49rem + 1.15vw, 2.44rem);
+  --step-4:  clamp(2.07rem, 1.67rem + 1.94vw, 3.20rem);
+
+  /* --- Rhythm ----------------------------------------------------------- */
+  --measure: 68ch;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --shell: 1180px;
+  --shell-narrow: 820px;
+  --radius: 6px;
+  --shadow: 0 1px 2px rgb(16 29 40 / 6%), 0 8px 24px -12px rgb(16 29 40 / 14%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --brand:        #7fb4d8;
+    --brand-strong: #a8cde6;
+    --brand-tint:   #4d80a5;
+    --brand-wash:   #162835;
+    --accent:       #f0a468;
+    --accent-tint:  #b9722f;
+
+    --ink:       #e8eef3;
+    --ink-soft:  #a9bcc9;
+    --ink-faint: #7d93a3;
+    --paper:     #0d1a24;
+    --paper-alt: #12222e;
+    --paper-deep:#081319;
+    --line:      #24394a;
+    --line-soft: #1a2c3a;
+    --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px -12px rgb(0 0 0 / 55%);
+  }
+}
+
+/* --- Reset-ish ---------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+
+/* --- Headings ----------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); }
+
+p { text-wrap: pretty; }
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+}
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- Layout primitives -------------------------------------------------- */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.shell--narrow { max-width: var(--shell-narrow); }
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.skip-link:focus { inset-inline-start: 0; }
+
+/* --- Eyebrow / section label ------------------------------------------- */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- Long-form prose ---------------------------------------------------- */
+.prose { max-width: var(--measure); }
+.prose > * + * { margin-top: 1.15em; }
+.prose > * + h2 { margin-top: 2.4em; }
+.prose > * + h3 { margin-top: 1.9em; }
+.prose h2, .prose h3 { max-width: 40ch; }
+.prose strong { font-weight: 650; color: var(--ink); }
+.prose ul, .prose ol { padding-inline-start: 1.35em; }
+.prose li + li { margin-top: 0.45em; }
+.prose li::marker { color: var(--brand-tint); }
+.prose blockquote {
+  border-inline-start: 3px solid var(--brand-tint);
+  padding-inline-start: 1.25rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+.btn:hover { text-decoration: none; }
+.btn--solid { background: var(--brand); color: #fff; }
+.btn--solid:hover { background: var(--brand-strong); }
+.btn--ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn--ghost:hover { border-color: var(--brand); color: var(--brand); }
+.btn--onDark { background: transparent; border-color: rgb(255 255 255 / 45%); color: #fff; }
+.btn--onDark:hover { background: #fff; border-color: #fff; color: var(--brand-strong); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .btn--solid { color: var(--paper-deep); }
+}
+
+/* --- Utilities ---------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

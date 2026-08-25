@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import { site } from '../data/site';
+
+const { address } = site;
+const mapQuery = encodeURIComponent(
+  `${address.street}, ${address.postalCode} ${address.city}, ${address.country}`
+);
+---
+
+<Base
+  title="Contact us"
+  description="Contact Zeliade Systems — 56 Rue Jean-Jacques Rousseau, 75001 Paris, France. contact@zeliade.com"
+>
+  <PageHeader eyebrow="Contact" title="Contact us" />
+
+  <Section narrow>
+    <dl class="contact">
+      <div class="contact__row">
+        <dt>Email</dt>
+        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+      </div>
+      <div class="contact__row">
+        <dt>Telephone</dt>
+        <dd><a href={`tel:${site.phoneHref}`}>{site.phone}</a></dd>
+      </div>
+      <div class="contact__row">
+        <dt>Address</dt>
+        <dd>
+          <address>
+            {address.street}<br />
+            {address.postalCode} {address.city}<br />
+            {address.country}
+          </address>
+          <a
+            class="contact__map"
+            href={`https://www.openstreetmap.org/search?query=${mapQuery}`}
+            target="_blank"
+            rel="noopener"
+          >
+            View on a map<span aria-hidden="true"> ↗</span>
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </Section>
+</Base>
+
+<style>
+  .contact { margin: 0; }
+
+  .contact__row {
+    display: grid;
+    gap: 0.35rem 2rem;
+    padding-block: 1.35rem;
+    border-top: 1px solid var(--line);
+  }
+  .contact__row:last-child { border-bottom: 1px solid var(--line); }
+
+  @media (min-width: 34rem) {
+    .contact__row { grid-template-columns: 9rem minmax(0, 1fr); }
+  }
+
+  .contact dt {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.2rem;
+  }
+
+  .contact dd { margin: 0; font-size: var(--step-1); }
+  .contact address { font-style: normal; line-height: 1.55; }
+
+  .contact__map {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+</style>

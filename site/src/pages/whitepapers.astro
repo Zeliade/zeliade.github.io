@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import PaperList from '../components/PaperList.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<Base
+  title="White papers"
+  description="Zeliade white papers on initial margin, expected shortfall backtesting, stress scenario scoring, SVI/SSVI volatility calibration and CCP default loss allocation."
+>
+  <PageHeader
+    eyebrow="Research"
+    title="White papers"
+    lede="Our research notes on margin models, volatility calibration and CCP risk methodologies. All available as free PDF downloads."
+  />
+  <Section>
+    <PaperList kind="whitepapers" />
+    <p class="see-also">
+      Looking for peer-reviewed work? See our <a href="/researchpapers/">research papers</a>.
+    </p>
+  </Section>
+  <CtaBand />
+</Base>
+
+<style>
+  .see-also { margin-top: 2rem; color: var(--ink-soft); }
+</style>

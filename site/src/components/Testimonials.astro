@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import Section from './Section.astro';
+
+interface Props {
+  /** Which page's quotes to show — matches the `pages:` field in testimonials.yaml. */
+  page: 'home' | 'zqf' | 'consulting';
+  /** Background band, same options as <Section>. */
+  tone?: 'default' | 'alt';
+  heading?: string;
+}
+const { page, tone = 'default', heading = 'Testimonials' } = Astro.props;
+
+const quotes = (await getCollection('testimonials')).filter((q) => q.data.pages.includes(page));
+---
+
+{/* Renders nothing at all — not even an empty band — when this page has no
+    quotes, so adding the first one back is purely a testimonials.yaml edit. */}
+{
+  quotes.length > 0 && (
+    <Section tone={tone}>
+      <h2 class="eyebrow">{heading}</h2>
+      <div class="testimonials__grid">
+        {quotes.map((q) => (
+          <figure class="quote">
+            <blockquote>{q.data.quote}</blockquote>
+            <figcaption>
+              {q.data.author && <span class="quote__author">{q.data.author}</span>}
+              <span class="quote__title">{q.data.title}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+<style>
+  .testimonials__grid {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    margin-top: 1.75rem;
+  }
+  @media (min-width: 52rem) {
+    .testimonials__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  /* A lone quote should not stretch to a full-width measure. */
+  .testimonials__grid:has(> :only-child) { max-width: 42rem; }
+
+  .quote {
+    margin: 0;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .quote blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  /* Hanging opening quote mark. */
+  .quote blockquote::before {
+    content: '\201C';
+    float: left;
+    margin-inline-start: -0.42em;
+    font-size: 2.4em;
+    line-height: 0.86;
+    color: var(--brand-tint);
+  }
+  .quote blockquote::after { content: '\201D'; }
+
+  .quote figcaption {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line-soft);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .quote__author { display: block; font-weight: 650; color: var(--ink); }
+  .quote__title { display: block; color: var(--ink-faint); }
+</style>

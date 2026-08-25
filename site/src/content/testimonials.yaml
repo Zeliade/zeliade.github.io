@@ -1,0 +1,52 @@
+# Client quotes. Remove an entry to take a quote down; add one to put a quote up.
+#
+#   id:     unique slug, not shown to visitors
+#   quote:  the quote itself, without surrounding quotation marks (the design
+#           adds them). `>-` lets you wrap it over several lines.
+#   author: optional — omit it when the client asked to stay unnamed
+#   title:  role and company, shown under the quote
+#   pages:  where it appears — any of [home, zqf, consulting]
+#
+# A page with no quotes renders no testimonials section at all, so this file can
+# safely be emptied to `[]` and refilled later.
+
+- id: large-bank-quants
+  quote: >-
+    ZQF is the only framework I could find on the market that could help my team get up to
+    speed right away thanks to its library of products and models, be very productive in
+    our work and also provide us with the option of easily moving our work to a production
+    level. This was key in our decision, as was the availability of the source code.
+  title: "Head of Quants, Risk Department, Large Bank"
+  pages: [zqf]
+
+- id: hedge-fund-manager
+  quote: >-
+    Their products are just smart: they provide unmatched calibration and speed, including
+    senior tranches. To me this can only be achieved by a team that excels in both IT and
+    quant.
+  title: "Manager, Hedge Fund"
+  pages: [zqf]
+
+- id: bluecrest
+  quote: >-
+    Our business has very high standards, and we expected the same from Zeliade. We
+    foremost appreciated their result driven approach. They could only do so by assembling
+    a small, but most importantly flexible team that combined IT, numerical and financial
+    skills. Zeliade worked efficiently with our top Quants and proved very reactive and
+    flexible to our demands. As a result, they were able to deliver a customized library
+    with performances that exceeded other packages.
+  author: "Farid Amellal"
+  title: "Co-Head of the Multi Strategy Credit Strategy, BlueCrest Capital Management LP"
+  pages: [consulting]
+
+- id: aleva
+  quote: >-
+    Corporate covenant is the main risk of a UK occupational pension fund, but very few
+    have attempted to quantify the covenant risk. Considering the complexity of the
+    problem, Zeliade has developed for ALEVA a reliable tool to assess the quality of a
+    covenant and its interaction with the investment strategy of scheme. The tool is now a
+    very powerful piece for the marketing of ALEVA's pension buy-out solution.
+  author: "Eric Viet"
+  title: "CEO, Aleva Advisor LLP"
+  pages: [consulting]
+

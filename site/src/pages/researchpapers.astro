@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import PaperList from '../components/PaperList.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<Base
+  title="Research papers"
+  description="Peer-reviewed publications by the Zeliade quant team on no-arbitrage conditions for the SVI and SSVI implied volatility parametrizations."
+>
+  <PageHeader
+    eyebrow="Research"
+    title="Research papers"
+    lede="Peer-reviewed publications by the Zeliade quant team."
+  />
+  <Section>
+    <PaperList kind="papers" />
+    <p class="see-also">
+      Our practitioner notes are collected in the <a href="/whitepapers/">white papers</a>.
+    </p>
+  </Section>
+  <CtaBand />
+</Base>
+
+<style>
+  .see-also { margin-top: 2rem; color: var(--ink-soft); }
+</style>
