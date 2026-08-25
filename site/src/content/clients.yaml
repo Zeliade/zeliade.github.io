@@ -2,6 +2,7 @@
 # plus the PNG in public/img/logos/. `name` is used as the image alt text.
 
 - id: ccp
+  order: 1
   heading: "Model Validation and Development for CCPs"
   groups:
     - logos:
@@ -23,6 +24,7 @@
         - { name: "KACC", src: /img/logos/KACC.png }
 
 - id: consulting
+  order: 2
   heading: "Consulting"
   groups:
     - logos:
@@ -36,6 +38,7 @@
         - { name: "EiFFEL Investment Group", src: /img/logos/EiFFEL.png }
 
 - id: analytics
+  order: 3
   heading: "Analytics (Zeliade Quant Framework)"
   groups:
     - label: "Banks"

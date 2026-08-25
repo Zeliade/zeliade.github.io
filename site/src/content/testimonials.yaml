@@ -11,6 +11,7 @@
 # safely be emptied to `[]` and refilled later.
 
 - id: large-bank-quants
+  order: 1
   quote: >-
     ZQF is the only framework I could find on the market that could help my team get up to
     speed right away thanks to its library of products and models, be very productive in
@@ -20,6 +21,7 @@
   pages: [zqf]
 
 - id: hedge-fund-manager
+  order: 2
   quote: >-
     Their products are just smart: they provide unmatched calibration and speed, including
     senior tranches. To me this can only be achieved by a team that excels in both IT and
@@ -28,6 +30,7 @@
   pages: [zqf]
 
 - id: bluecrest
+  order: 3
   quote: >-
     Our business has very high standards, and we expected the same from Zeliade. We
     foremost appreciated their result driven approach. They could only do so by assembling
@@ -40,6 +43,7 @@
   pages: [consulting]
 
 - id: aleva
+  order: 4
   quote: >-
     Corporate covenant is the main risk of a UK occupational pension fund, but very few
     have attempted to quantify the covenant risk. Considering the complexity of the

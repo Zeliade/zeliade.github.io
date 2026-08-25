@@ -62,6 +62,9 @@ const clientSegments = defineCollection({
   loader: file('./src/content/clients.yaml'),
   schema: z.object({
     id: z.string(),
+    /** Ascending. getCollection() returns entries sorted by id, not in file
+        order, so the display order has to be stated explicitly. */
+    order: z.number(),
     heading: z.string(),
     /** Optional lead-in paragraph shown under the heading. */
     note: z.string().optional(),
@@ -85,6 +88,8 @@ const testimonials = defineCollection({
   loader: file('./src/content/testimonials.yaml'),
   schema: z.object({
     id: z.string(),
+    /** Ascending; see the note on clientSegments.order. */
+    order: z.number(),
     quote: z.string(),
     /** Omitted when the client asked to stay unnamed. */
     author: z.string().optional(),

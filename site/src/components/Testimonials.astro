@@ -11,7 +11,9 @@ interface Props {
 }
 const { page, tone = 'default', heading = 'Testimonials' } = Astro.props;
 
-const quotes = (await getCollection('testimonials')).filter((q) => q.data.pages.includes(page));
+const quotes = (await getCollection('testimonials'))
+  .filter((q) => q.data.pages.includes(page))
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 {/* Renders nothing at all — not even an empty band — when this page has no

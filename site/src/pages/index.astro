@@ -31,7 +31,9 @@ const services = [
 ];
 
 // A representative selection for the homepage; the full wall lives on /clients/.
-const segments = await getCollection('clientSegments');
+const segments = (await getCollection('clientSegments')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 const featuredLogos = segments.flatMap((s) => s.data.groups.flatMap((g) => g.logos)).slice(0, 16);
 ---
 

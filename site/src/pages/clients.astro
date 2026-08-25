@@ -6,7 +6,9 @@ import Section from '../components/Section.astro';
 import LogoGrid from '../components/LogoGrid.astro';
 import CtaBand from '../components/CtaBand.astro';
 
-const segments = await getCollection('clientSegments');
+const segments = (await getCollection('clientSegments')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <Base
