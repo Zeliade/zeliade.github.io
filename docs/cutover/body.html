@@ -1,0 +1,197 @@
+<article>
+
+<header class="cover">
+  <p class="kicker">Zeliade Systems &middot; www.zeliade.com</p>
+  <h1>Website cutover</h1>
+  <p class="sub">How to complete the merge that replaces the WordPress site with the new Astro build</p>
+  <dl class="meta">
+    <div><dt>Repository</dt><dd>github.com/Zeliade/zeliade.github.io</dd></div>
+    <div><dt>Pull requests</dt><dd>2, to be merged in order</dd></div>
+    <div><dt>Expected downtime</dt><dd>2&ndash;3 minutes, at step 4</dd></div>
+    <div><dt>Rollback</dt><dd>A settings toggle, until step 6</dd></div>
+  </dl>
+</header>
+
+<section class="callout callout--key">
+  <h2>The one thing that matters</h2>
+  <p>There are two pull requests and <strong>they must merge in this order</strong>. PR&nbsp;1 is
+  safe at any time. PR&nbsp;2 deletes the files that <span class="nowrap">www.zeliade.com</span> is
+  currently served from &mdash; merging it before GitHub Pages has been switched over takes the site
+  offline.</p>
+  <p>Everything else in this document is detail around that single constraint.</p>
+</section>
+
+<section>
+  <h2>What is changing</h2>
+  <p>The site has been a WordPress export edited as raw HTML: 670&nbsp;KB of markup carrying about
+  15&nbsp;KB of actual text, with the header, footer and menu duplicated across all eleven pages.
+  Changing a phone number meant eleven edits.</p>
+  <p>It is now built from structured content. Text lives in Markdown and YAML files, validated
+  against a schema, and the pages are generated from them. Adding a white paper is one small file
+  plus its PDF. Nobody edits HTML.</p>
+
+  <table class="facts">
+    <thead><tr><th>&nbsp;</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>HTML</td><td>764 KB</td><td>182 KB</td></tr>
+      <tr><td>Assets</td><td>22 MB</td><td>2.1 MB + 4.4 MB of white paper PDFs</td></tr>
+      <tr><td>JavaScript</td><td>jQuery, Bootstrap, Chart.js, isotope, packery</td><td>~30 lines, for the mobile menu</td></tr>
+      <tr><td>Third-party requests</td><td>None</td><td>None</td></tr>
+      <tr><td>Editing a page</td><td>Hand-edit nested HTML</td><td>Edit a Markdown file</td></tr>
+    </tbody>
+  </table>
+
+  <p>Page addresses are unchanged, so no external link to a page breaks. One exception is covered
+  under <em>After the cutover</em>.</p>
+</section>
+
+<section class="prs">
+  <h2>The two pull requests</h2>
+  <div class="pr">
+    <p class="pr__tag pr__tag--safe">Safe to merge</p>
+    <h3>PR 1 &mdash; <code>modernize/astro-site</code></h3>
+    <p>Adds the new site in <code>site/</code> plus the build workflow, alongside everything that is
+    already there. 114 files added, nothing removed.</p>
+    <p class="pr__effect"><strong>Effect on the live site:</strong> none.</p>
+  </div>
+  <div class="pr">
+    <p class="pr__tag pr__tag--danger">Merge last</p>
+    <h3>PR 2 &mdash; <code>modernize/remove-legacy</code></h3>
+    <p>Deletes the WordPress export from the repository root: the scraped pages, the Avada theme,
+    Fusion Builder, the bundled jQuery and the RSS stubs. 319 files removed.</p>
+    <p class="pr__effect"><strong>Effect on the live site:</strong> removes the files Pages currently
+    serves. Harmless <em>after</em> step 5, fatal before it.</p>
+  </div>
+</section>
+
+<section class="steps">
+  <h2>How to complete the merge</h2>
+
+  <ol>
+    <li>
+      <h3>Merge PR 1</h3>
+      <p>Merge <code>modernize/astro-site</code> into <code>master</code>. The live site does not
+      change: Pages is still deploying from the branch root, and every legacy file is still in place.</p>
+      <p class="note"><strong>Expect one red run.</strong> Merging starts the
+      <em>Build and deploy site</em> workflow. It will build successfully and then <em>fail on the
+      deploy step</em>, complaining that Pages is not configured for Actions. That is correct at this
+      point &mdash; Pages has not been switched yet. Do not try to fix it.</p>
+    </li>
+
+    <li>
+      <h3>Check the build job</h3>
+      <p>Open the failed run, open the <code>build</code> job, and confirm three lines:</p>
+      <pre>&#10003; 31 logo, 12 PDF and 5 portrait reference(s) resolved
+12 page(s) built
+0 errors, 0 warnings, 0 hints</pre>
+      <p>If the build job itself is red, stop and investigate. Do not continue to step 3.</p>
+    </li>
+
+    <li>
+      <h3>Switch Pages to GitHub Actions</h3>
+      <p class="path">Settings &rarr; Pages &rarr; Build and deployment &rarr; Source:
+      <strong>GitHub Actions</strong></p>
+      <p>Leave the custom domain and <em>Enforce HTTPS</em> alone.</p>
+      <p class="note note--warn"><strong>Downtime begins here.</strong> The old deployment stops
+      being served and nothing has been published by Actions yet. Go straight to step 4 &mdash; do
+      not stop for coffee.</p>
+    </li>
+
+    <li>
+      <h3>Run the workflow</h3>
+      <p class="path">Actions &rarr; Build and deploy site &rarr; <strong>Run workflow</strong>
+      (branch <code>master</code>)</p>
+      <p>Roughly two minutes. Both jobs must go green. <strong>Downtime ends when the
+      <code>deploy</code> job finishes.</strong></p>
+    </li>
+
+    <li>
+      <h3>Verify on the real domain</h3>
+      <p>Not on a preview. Every page, plus one PDF:</p>
+      <ul class="urls">
+        <li>www.zeliade.com/</li>
+        <li>www.zeliade.com/zqf/</li>
+        <li>www.zeliade.com/consulting/</li>
+        <li>www.zeliade.com/mvccps/</li>
+        <li>www.zeliade.com/whitepapers/</li>
+        <li>www.zeliade.com/researchpapers/</li>
+        <li>www.zeliade.com/clients/</li>
+        <li>www.zeliade.com/company/</li>
+        <li>www.zeliade.com/team/</li>
+        <li>www.zeliade.com/contact-us/</li>
+        <li>www.zeliade.com/legal-information/</li>
+        <li>www.zeliade.com/whitepapers/zwp-012-IMforOptions.pdf</li>
+      </ul>
+      <p>Also check the padlock is present, and that a nonsense address returns the styled 404 page
+      rather than GitHub's.</p>
+      <p class="note"><strong>This is the decision point.</strong> If anything is wrong, roll back
+      now &mdash; see <em>Rollback</em>, below. Rollback is free until step 6.</p>
+    </li>
+
+    <li>
+      <h3>Merge PR 2</h3>
+      <p>Only now. Pages no longer serves the repository root, so removing those 319 files has no
+      visible effect. This is what makes the change real rather than merely additive.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="rollback">
+  <h2>Rollback</h2>
+
+  <h3>Before step 6 &mdash; a settings toggle</h3>
+  <p class="path">Settings &rarr; Pages &rarr; Source &rarr; <strong>Deploy from a branch</strong>,
+  branch <code>master</code>, folder <code>/ (root)</code></p>
+  <p>No git operation, no deploy. Every legacy file is still on <code>master</code>, so the old site
+  returns as soon as Pages rebuilds. This is the entire reason the deletion is a separate pull
+  request.</p>
+
+  <h3>After step 6 &mdash; restore the files, then toggle</h3>
+  <pre>git revert --no-edit &lt;sha of "Remove the legacy WordPress export"&gt;
+git push origin master</pre>
+  <p>Then switch the source back as above.</p>
+
+  <p class="reassure">Nothing is ever unrecoverable. The complete WordPress export stays in git
+  history, including the higher-resolution team portraits and the superseded 2009 edition of the SVI
+  calibration white paper.</p>
+</section>
+
+<section>
+  <h2>After the cutover</h2>
+  <ul class="after">
+    <li><strong>Submit the sitemap</strong> &mdash; <code>www.zeliade.com/sitemap-index.xml</code> in
+    Google Search Console.</li>
+    <li><strong>One class of link does break.</strong> White paper PDFs moved from
+    <code>/wp-content/uploads/whitepapers/&hellip;</code> to <code>/whitepapers/&hellip;</code> so
+    that no WordPress-shaped address remains. GitHub Pages cannot redirect a <code>.pdf</code>
+    address, so old links to the PDFs will 404. Worth searching for who links to
+    <code>zeliade.com/wp-content</code> and asking them to update.</li>
+    <li><strong>Delete both branches</strong> once you are satisfied.</li>
+  </ul>
+</section>
+
+<section class="section--last">
+  <h2>Who edits what, afterwards</h2>
+  <p>No HTML, in any of these cases.</p>
+  <table class="facts facts--edit">
+    <thead><tr><th>To change&hellip;</th><th>Edit&hellip;</th></tr></thead>
+    <tbody>
+      <tr><td>Text of a page</td><td><code>site/src/content/pages/&lt;page&gt;.md</code></td></tr>
+      <tr><td>Add a white paper</td><td><code>site/src/content/whitepapers/&lt;slug&gt;.md</code> + the PDF</td></tr>
+      <tr><td>Add a research paper</td><td><code>site/src/content/papers/&lt;slug&gt;.md</code></td></tr>
+      <tr><td>Add or remove a team member</td><td><code>site/src/content/team/&lt;slug&gt;.md</code> + a portrait</td></tr>
+      <tr><td>Add or remove a client logo</td><td><code>site/src/content/clients.yaml</code></td></tr>
+      <tr><td>Add or remove a client quote</td><td><code>site/src/content/testimonials.yaml</code></td></tr>
+      <tr><td>The menu</td><td><code>site/src/data/nav.ts</code></td></tr>
+      <tr><td>Address, phone, email</td><td><code>site/src/data/site.ts</code></td></tr>
+      <tr><td>Colours, type, spacing</td><td><code>site/src/styles/global.css</code></td></tr>
+    </tbody>
+  </table>
+  <p>Every one of these is checked against a schema when the site builds. A missing PDF, an
+  unresolvable portrait, a malformed date or a forgotten page description fails the build instead of
+  reaching the live site.</p>
+  <p class="colophon">The full runbook lives in <code>CUTOVER.md</code> at the repository root, and
+  editing instructions in <code>site/README.md</code>.</p>
+</section>
+
+</article>
