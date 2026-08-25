@@ -25,7 +25,33 @@ on both, so you see the same website either way — but on `remove-legacy` the o
 WordPress files are already gone, which proves the new build does not quietly
 depend on any of them.
 
-Requires Node.js 22 or newer (`node --version`).
+Requires **Node.js 22.12 or newer** (`node --version`).
+
+<details>
+<summary>If you do not have Node.js</summary>
+
+On macOS or Linux, install it with nvm:
+
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# open a NEW terminal, then:
+nvm install 22
+```
+
+On Windows, use the LTS installer from nodejs.org.
+
+**If `node --version` works but `npm` says "command not found",** nvm is
+installed but not loaded in this shell. Either open a new terminal, or run:
+
+```sh
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+```
+
+`npm` is itself a Node script, so it needs `node` *on your PATH* — not merely
+present on disk. Adding those two lines to `~/.bashrc` makes it permanent.
+
+</details>
 
 ```sh
 git fetch origin

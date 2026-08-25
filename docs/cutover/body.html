@@ -75,7 +75,24 @@
   <code>remove-legacy</code> the old WordPress files are already gone, which proves the new build
   does not quietly depend on any of them.</p>
 
-  <p>Requires <strong>Node.js 22 or newer</strong> (<code>node --version</code>).</p>
+  <p>Requires <strong>Node.js 22.12 or newer</strong>. Check with <code>node --version</code>.</p>
+
+  <div class="aside">
+    <h3>If you do not have Node.js</h3>
+    <p>On <strong>macOS or Linux</strong>, install it with nvm:</p>
+    <pre>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# open a NEW terminal, then:
+nvm install 22</pre>
+    <p>On <strong>Windows</strong>, use the installer from <code>nodejs.org</code> (LTS).</p>
+    <p><strong>If <code>node --version</code> works but <code>npm</code> says &ldquo;command not
+    found&rdquo;,</strong> nvm is installed but not loaded in this shell. Either open a new terminal,
+    or run:</p>
+    <pre>export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"</pre>
+    <p><code>npm</code> is itself a Node script, so it needs <code>node</code> <em>on your
+    PATH</em> &mdash; not merely present on disk. Adding those two lines to
+    <code>~/.bashrc</code> makes it permanent.</p>
+  </div>
 
   <pre>git fetch origin
 git checkout modernize/remove-legacy
