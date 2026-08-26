@@ -18,13 +18,7 @@ export const nav: NavItem[] = [
       { label: 'Model Validation for CCPs', href: '/mvccps/' },
     ],
   },
-  {
-    label: 'Research',
-    children: [
-      { label: 'White Papers', href: '/whitepapers/' },
-      { label: 'Research Papers', href: '/researchpapers/' },
-    ],
-  },
+  { label: 'White Papers', href: '/whitepapers/' },
   { label: 'Clients', href: '/clients/' },
   {
     label: 'About Us',
